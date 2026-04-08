@@ -4,12 +4,12 @@
 
 ## Структура проекта
 
-- **src/api_interaction** — получение данных о вакансиях через HeadHunter API.
-- **src/json_to_csv** — преобразование JSON в CSV для анализа.
-- **src/sorting** — сортировка данных по дате и идентификатору.
-- **src/cleaning** — очистка и выделение уровня позиции из названия.
-- **src/statistics** — подсчёт уникальных значений и их частот.
-- **src/partitioning** — разбиение и объединение данных по датам.
+- **src/1_api_interaction** — получение данных о вакансиях через HeadHunter API.
+- **src/2_json_to_csv** — преобразование JSON в CSV для анализа.
+- **src/3_sorting** — сортировка данных по дате и идентификатору.
+- **src/4_cleaning** — очистка и выделение уровня позиции из названия.
+- **src/5_statistics** — подсчёт уникальных значений и их частот.
+- **src/6_partitioning** — разбиение и объединение данных по датам.
 
 ---
 
@@ -19,8 +19,8 @@
 
 ### Пример команды для запуска скрипта:
 ```bash
-cd src/api_interaction
-./hh.sh "data scientist"
+cd src/1_api_interaction
+./hh.sh 'data scientist'
 ```
 *Файл результата: `hh.json`*
 
@@ -32,8 +32,8 @@ cd src/api_interaction
 
 ### Пример команды для запуска скрипта:
 ```bash
-cd src/json_to_csv
-./json_to_csv.sh ../api_interaction/hh.json
+cd src/2_json_to_csv
+./json_to_csv.sh
 ```
 *Файл результата: `hh.csv`*
 
@@ -45,8 +45,8 @@ cd src/json_to_csv
 
 ### Пример команды для запуска скрипта:
 ```bash
-cd src/sorting
-./sorter.sh ../json_to_csv/hh.csv
+cd src/3_sorting
+./sorter.sh
 ```
 *Файл результата: `hh_sorted.csv`*
 
@@ -54,12 +54,12 @@ cd src/sorting
 
 ## 4. Очистка и выделение уровня позиции (src/cleaning)
 
-В этом этапе я реализовала скрипт, который анализирует название вакансии и выделяет из него уровень позиции (*Junior*, *Middle*, *Senior*). Если ни один из этих уровней не найден, в поле записывается "-". Если встречается несколько уровней, они сохраняются через слэш. Итоговый файл — `hh_positions.csv`, с заголовками и отсортированными данными.
+В этом этапе я реализовала скрипт, который анализирует название вакансии и выделяет из него уровень позиции (*Junior*, *Middle*, *Senior*). Если ни один из этих уровней не найден, в поле записывается "-". Итоговый файл — `hh_positions.csv`, с заголовками и отсортированными данными.
 
 ### Пример команды для запуска скрипта:
 ```bash
-cd src/cleaning
-./cleaner.sh ../sorting/hh_sorted.csv
+cd src/4_cleaning
+./cleaner.sh 
 ```
 *Файл результата: `hh_positions.csv`*
 
@@ -71,8 +71,8 @@ cd src/cleaning
 
 ### Пример команды для запуска скрипта:
 ```bash
-cd src/statistics
-./counter.sh ../cleaning/hh_positions.csv
+cd src/5_statistics
+./counter.sh
 ```
 *Файл результата: `hh_uniq_positions.csv`*
 
@@ -86,8 +86,8 @@ cd src/statistics
 
 ### Пример команды для запуска скрипта:
 ```bash
-cd src/partitioning
-./partitioner.sh ../cleaning/hh_positions.csv
+cd src/6_partitioning
+./partitioner.sh
 ./concatenator.sh
 ```
 *Файлы результата: по датам в текущей директории, объединённый файл — `hh_concatenated.csv`*
